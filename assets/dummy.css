@@ -1,0 +1,39 @@
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+.demo {
+  font-size: 70px;
+  height: 100vh;
+  text-align: center;
+}
+
+.demo-font {
+  height: 50%;
+  padding: 10px;
+  text-transform: uppercase;
+}
+
+.demo-font span::before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.roboto {
+  background-color: rgb(0, 166, 157);
+  color: white;
+  font-family: "Roboto";
+}
+
+.open-sans {
+  background-color: white;
+  color: rgb(0, 166, 157);
+  font-family: "Open Sans";
+}
