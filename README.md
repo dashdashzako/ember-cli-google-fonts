@@ -4,6 +4,8 @@ Lazily add Google Fonts to your Ember application.
 
 This addon will add the fonts declaration to the `content-for: head` hook to avoid including these inside the css files.
 
+Addon dummy build is available here: http://damiencaselli.github.io/ember-cli-google-fonts/.
+
 ## Installation
 
 ### Install addon
@@ -20,8 +22,8 @@ module.exports = function(environment) {
     /* your config */
 
     googleFonts: [
-      'Open+Sans:600',
-      'Roboto'
+      'Open+Sans:300',
+      'Roboto:300'
     ],
 
     // Set or update content security policies
