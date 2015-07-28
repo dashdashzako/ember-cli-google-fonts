@@ -6,6 +6,8 @@ This addon will add the fonts declaration to the `content-for: head` hook to avo
 
 Addon dummy build is available here: http://damiencaselli.github.io/ember-cli-google-fonts/.
 
+Versions will follow [Ember 2.x project](http://emberjs.com/blog/2015/06/16/ember-project-at-2-0.html) versioning.
+
 ## Installation
 
 ### Install addon
