@@ -1,114 +1,260 @@
+"use strict";
+
 /* jshint ignore:start */
+
+
 
 /* jshint ignore:end */
 
-define('dummy/app', ['exports', 'ember', 'ember/resolver', 'ember/load-initializers', 'dummy/config/environment'], function (exports, Ember, Resolver, loadInitializers, config) {
+define('dummy/app', ['exports', 'ember', 'dummy/resolver', 'ember-load-initializers', 'dummy/config/environment'], function (exports, _ember, _dummyResolver, _emberLoadInitializers, _dummyConfigEnvironment) {
 
-  'use strict';
+  var App = undefined;
 
-  var App;
+  _ember['default'].MODEL_FACTORY_INJECTIONS = true;
 
-  Ember['default'].MODEL_FACTORY_INJECTIONS = true;
-
-  App = Ember['default'].Application.extend({
-    modulePrefix: config['default'].modulePrefix,
-    podModulePrefix: config['default'].podModulePrefix,
-    Resolver: Resolver['default']
+  App = _ember['default'].Application.extend({
+    modulePrefix: _dummyConfigEnvironment['default'].modulePrefix,
+    podModulePrefix: _dummyConfigEnvironment['default'].podModulePrefix,
+    Resolver: _dummyResolver['default']
   });
 
-  loadInitializers['default'](App, config['default'].modulePrefix);
+  (0, _emberLoadInitializers['default'])(App, _dummyConfigEnvironment['default'].modulePrefix);
 
   exports['default'] = App;
-
 });
-define('dummy/controllers/array', ['exports', 'ember'], function (exports, Ember) {
+define('dummy/components/app-version', ['exports', 'ember-cli-app-version/components/app-version', 'dummy/config/environment'], function (exports, _emberCliAppVersionComponentsAppVersion, _dummyConfigEnvironment) {
 
-	'use strict';
+  var name = _dummyConfigEnvironment['default'].APP.name;
+  var version = _dummyConfigEnvironment['default'].APP.version;
 
-	exports['default'] = Ember['default'].Controller;
-
+  exports['default'] = _emberCliAppVersionComponentsAppVersion['default'].extend({
+    version: version,
+    name: name
+  });
 });
-define('dummy/controllers/object', ['exports', 'ember'], function (exports, Ember) {
-
-	'use strict';
-
-	exports['default'] = Ember['default'].Controller;
-
+define('dummy/controllers/array', ['exports', 'ember'], function (exports, _ember) {
+  exports['default'] = _ember['default'].Controller;
 });
-define('dummy/initializers/app-version', ['exports', 'dummy/config/environment', 'ember'], function (exports, config, Ember) {
-
-  'use strict';
-
-  var classify = Ember['default'].String.classify;
-  var registered = false;
-
+define('dummy/controllers/object', ['exports', 'ember'], function (exports, _ember) {
+  exports['default'] = _ember['default'].Controller;
+});
+define('dummy/helpers/pluralize', ['exports', 'ember-inflector/lib/helpers/pluralize'], function (exports, _emberInflectorLibHelpersPluralize) {
+  exports['default'] = _emberInflectorLibHelpersPluralize['default'];
+});
+define('dummy/helpers/singularize', ['exports', 'ember-inflector/lib/helpers/singularize'], function (exports, _emberInflectorLibHelpersSingularize) {
+  exports['default'] = _emberInflectorLibHelpersSingularize['default'];
+});
+define('dummy/initializers/app-version', ['exports', 'ember-cli-app-version/initializer-factory', 'dummy/config/environment'], function (exports, _emberCliAppVersionInitializerFactory, _dummyConfigEnvironment) {
   exports['default'] = {
     name: 'App Version',
-    initialize: function initialize(container, application) {
-      if (!registered) {
-        var appName = classify(application.toString());
-        Ember['default'].libraries.register(appName, config['default'].APP.version);
-        registered = true;
-      }
+    initialize: (0, _emberCliAppVersionInitializerFactory['default'])(_dummyConfigEnvironment['default'].APP.name, _dummyConfigEnvironment['default'].APP.version)
+  };
+});
+define('dummy/initializers/container-debug-adapter', ['exports', 'ember-resolver/container-debug-adapter'], function (exports, _emberResolverContainerDebugAdapter) {
+  exports['default'] = {
+    name: 'container-debug-adapter',
+
+    initialize: function initialize() {
+      var app = arguments[1] || arguments[0];
+
+      app.register('container-debug-adapter:main', _emberResolverContainerDebugAdapter['default']);
+      app.inject('container-debug-adapter:main', 'namespace', 'application:main');
     }
   };
-
 });
-define('dummy/initializers/export-application-global', ['exports', 'ember', 'dummy/config/environment'], function (exports, Ember, config) {
+define('dummy/initializers/data-adapter', ['exports', 'ember'], function (exports, _ember) {
 
-  'use strict';
+  /*
+    This initializer is here to keep backwards compatibility with code depending
+    on the `data-adapter` initializer (before Ember Data was an addon).
+  
+    Should be removed for Ember Data 3.x
+  */
 
+  exports['default'] = {
+    name: 'data-adapter',
+    before: 'store',
+    initialize: _ember['default'].K
+  };
+});
+define('dummy/initializers/ember-data', ['exports', 'ember-data/setup-container', 'ember-data/-private/core'], function (exports, _emberDataSetupContainer, _emberDataPrivateCore) {
+
+  /*
+  
+    This code initializes Ember-Data onto an Ember application.
+  
+    If an Ember.js developer defines a subclass of DS.Store on their application,
+    as `App.StoreService` (or via a module system that resolves to `service:store`)
+    this code will automatically instantiate it and make it available on the
+    router.
+  
+    Additionally, after an application's controllers have been injected, they will
+    each have the store made available to them.
+  
+    For example, imagine an Ember.js application with the following classes:
+  
+    App.StoreService = DS.Store.extend({
+      adapter: 'custom'
+    });
+  
+    App.PostsController = Ember.ArrayController.extend({
+      // ...
+    });
+  
+    When the application is initialized, `App.ApplicationStore` will automatically be
+    instantiated, and the instance of `App.PostsController` will have its `store`
+    property set to that instance.
+  
+    Note that this code will only be run if the `ember-application` package is
+    loaded. If Ember Data is being used in an environment other than a
+    typical application (e.g., node.js where only `ember-runtime` is available),
+    this code will be ignored.
+  */
+
+  exports['default'] = {
+    name: 'ember-data',
+    initialize: _emberDataSetupContainer['default']
+  };
+});
+define('dummy/initializers/export-application-global', ['exports', 'ember', 'dummy/config/environment'], function (exports, _ember, _dummyConfigEnvironment) {
   exports.initialize = initialize;
 
-  function initialize(container, application) {
-    var classifiedName = Ember['default'].String.classify(config['default'].modulePrefix);
+  function initialize() {
+    var application = arguments[1] || arguments[0];
+    if (_dummyConfigEnvironment['default'].exportApplicationGlobal !== false) {
+      var value = _dummyConfigEnvironment['default'].exportApplicationGlobal;
+      var globalName;
 
-    if (config['default'].exportApplicationGlobal && !window[classifiedName]) {
-      window[classifiedName] = application;
+      if (typeof value === 'string') {
+        globalName = value;
+      } else {
+        globalName = _ember['default'].String.classify(_dummyConfigEnvironment['default'].modulePrefix);
+      }
+
+      if (!window[globalName]) {
+        window[globalName] = application;
+
+        application.reopen({
+          willDestroy: function willDestroy() {
+            this._super.apply(this, arguments);
+            delete window[globalName];
+          }
+        });
+      }
     }
   }
-
-  ;
 
   exports['default'] = {
     name: 'export-application-global',
 
     initialize: initialize
   };
-
 });
-define('dummy/router', ['exports', 'ember', 'dummy/config/environment'], function (exports, Ember, config) {
+define('dummy/initializers/injectStore', ['exports', 'ember'], function (exports, _ember) {
 
-  'use strict';
+  /*
+    This initializer is here to keep backwards compatibility with code depending
+    on the `injectStore` initializer (before Ember Data was an addon).
+  
+    Should be removed for Ember Data 3.x
+  */
 
-  var Router = Ember['default'].Router.extend({
-    location: config['default'].locationType
+  exports['default'] = {
+    name: 'injectStore',
+    before: 'store',
+    initialize: _ember['default'].K
+  };
+});
+define('dummy/initializers/store', ['exports', 'ember'], function (exports, _ember) {
+
+  /*
+    This initializer is here to keep backwards compatibility with code depending
+    on the `store` initializer (before Ember Data was an addon).
+  
+    Should be removed for Ember Data 3.x
+  */
+
+  exports['default'] = {
+    name: 'store',
+    after: 'ember-data',
+    initialize: _ember['default'].K
+  };
+});
+define('dummy/initializers/transforms', ['exports', 'ember'], function (exports, _ember) {
+
+  /*
+    This initializer is here to keep backwards compatibility with code depending
+    on the `transforms` initializer (before Ember Data was an addon).
+  
+    Should be removed for Ember Data 3.x
+  */
+
+  exports['default'] = {
+    name: 'transforms',
+    before: 'store',
+    initialize: _ember['default'].K
+  };
+});
+define("dummy/instance-initializers/ember-data", ["exports", "ember-data/-private/instance-initializers/initialize-store-service"], function (exports, _emberDataPrivateInstanceInitializersInitializeStoreService) {
+  exports["default"] = {
+    name: "ember-data",
+    initialize: _emberDataPrivateInstanceInitializersInitializeStoreService["default"]
+  };
+});
+define('dummy/resolver', ['exports', 'ember-resolver'], function (exports, _emberResolver) {
+  exports['default'] = _emberResolver['default'];
+});
+define('dummy/router', ['exports', 'ember', 'dummy/config/environment'], function (exports, _ember, _dummyConfigEnvironment) {
+
+  var Router = _ember['default'].Router.extend({
+    location: _dummyConfigEnvironment['default'].locationType
   });
 
   Router.map(function () {});
 
   exports['default'] = Router;
-
 });
-define('dummy/templates/application', ['exports'], function (exports) {
-
-  'use strict';
-
-  exports['default'] = Ember.HTMLBars.template((function() {
+define('dummy/services/ajax', ['exports', 'ember-ajax/services/ajax'], function (exports, _emberAjaxServicesAjax) {
+  Object.defineProperty(exports, 'default', {
+    enumerable: true,
+    get: function get() {
+      return _emberAjaxServicesAjax['default'];
+    }
+  });
+});
+define("dummy/templates/application", ["exports"], function (exports) {
+  exports["default"] = Ember.HTMLBars.template((function () {
     return {
-      isHTMLBars: true,
-      revision: "Ember@1.12.0",
-      blockParams: 0,
+      meta: {
+        "fragmentReason": {
+          "name": "triple-curlies"
+        },
+        "revision": "Ember@2.3.1",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 5,
+            "column": 0
+          }
+        },
+        "moduleName": "dummy/templates/application.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
       cachedFragment: null,
       hasRendered: false,
-      build: function build(dom) {
+      buildFragment: function buildFragment(dom) {
         var el0 = dom.createDocumentFragment();
         var el1 = dom.createElement("div");
-        dom.setAttribute(el1,"class","demo");
+        dom.setAttribute(el1, "class", "demo");
         var el2 = dom.createTextNode("\n  ");
         dom.appendChild(el1, el2);
         var el2 = dom.createElement("div");
-        dom.setAttribute(el2,"class","demo-font roboto");
+        dom.setAttribute(el2, "class", "demo-font roboto");
         var el3 = dom.createElement("span");
         var el4 = dom.createTextNode("Roboto");
         dom.appendChild(el3, el4);
@@ -117,7 +263,7 @@ define('dummy/templates/application', ['exports'], function (exports) {
         var el2 = dom.createTextNode("\n  ");
         dom.appendChild(el1, el2);
         var el2 = dom.createElement("div");
-        dom.setAttribute(el2,"class","demo-font open-sans");
+        dom.setAttribute(el2, "class", "demo-font open-sans");
         var el3 = dom.createElement("span");
         var el4 = dom.createTextNode("Open Sans");
         dom.appendChild(el3, el4);
@@ -130,126 +276,18 @@ define('dummy/templates/application', ['exports'], function (exports) {
         dom.appendChild(el0, el1);
         return el0;
       },
-      render: function render(context, env, contextualElement) {
-        var dom = env.dom;
-        dom.detectNamespace(contextualElement);
-        var fragment;
-        if (env.useFragmentCache && dom.canClone) {
-          if (this.cachedFragment === null) {
-            fragment = this.build(dom);
-            if (this.hasRendered) {
-              this.cachedFragment = fragment;
-            } else {
-              this.hasRendered = true;
-            }
-          }
-          if (this.cachedFragment) {
-            fragment = dom.cloneNode(this.cachedFragment, true);
-          }
-        } else {
-          fragment = this.build(dom);
-        }
-        return fragment;
-      }
+      buildRenderNodes: function buildRenderNodes() {
+        return [];
+      },
+      statements: [],
+      locals: [],
+      templates: []
     };
-  }()));
-
-});
-define('dummy/tests/app.jshint', function () {
-
-  'use strict';
-
-  module('JSHint - .');
-  test('app.js should pass jshint', function() { 
-    ok(true, 'app.js should pass jshint.'); 
-  });
-
-});
-define('dummy/tests/helpers/resolver', ['exports', 'ember/resolver', 'dummy/config/environment'], function (exports, Resolver, config) {
-
-  'use strict';
-
-  var resolver = Resolver['default'].create();
-
-  resolver.namespace = {
-    modulePrefix: config['default'].modulePrefix,
-    podModulePrefix: config['default'].podModulePrefix
-  };
-
-  exports['default'] = resolver;
-
-});
-define('dummy/tests/helpers/resolver.jshint', function () {
-
-  'use strict';
-
-  module('JSHint - helpers');
-  test('helpers/resolver.js should pass jshint', function() { 
-    ok(true, 'helpers/resolver.js should pass jshint.'); 
-  });
-
-});
-define('dummy/tests/helpers/start-app', ['exports', 'ember', 'dummy/app', 'dummy/router', 'dummy/config/environment'], function (exports, Ember, Application, Router, config) {
-
-  'use strict';
-
-
-
-  exports['default'] = startApp;
-  function startApp(attrs) {
-    var application;
-
-    var attributes = Ember['default'].merge({}, config['default'].APP);
-    attributes = Ember['default'].merge(attributes, attrs); // use defaults, but you can override;
-
-    Ember['default'].run(function () {
-      application = Application['default'].create(attributes);
-      application.setupForTesting();
-      application.injectTestHelpers();
-    });
-
-    return application;
-  }
-
-});
-define('dummy/tests/helpers/start-app.jshint', function () {
-
-  'use strict';
-
-  module('JSHint - helpers');
-  test('helpers/start-app.js should pass jshint', function() { 
-    ok(true, 'helpers/start-app.js should pass jshint.'); 
-  });
-
-});
-define('dummy/tests/router.jshint', function () {
-
-  'use strict';
-
-  module('JSHint - .');
-  test('router.js should pass jshint', function() { 
-    ok(true, 'router.js should pass jshint.'); 
-  });
-
-});
-define('dummy/tests/test-helper', ['dummy/tests/helpers/resolver', 'ember-qunit'], function (resolver, ember_qunit) {
-
-	'use strict';
-
-	ember_qunit.setResolver(resolver['default']);
-
-});
-define('dummy/tests/test-helper.jshint', function () {
-
-  'use strict';
-
-  module('JSHint - .');
-  test('test-helper.js should pass jshint', function() { 
-    ok(true, 'test-helper.js should pass jshint.'); 
-  });
-
+  })());
 });
 /* jshint ignore:start */
+
+
 
 /* jshint ignore:end */
 
@@ -274,10 +312,12 @@ catch(err) {
 
 });
 
-if (runningTests) {
-  require("dummy/tests/test-helper");
-} else {
-  require("dummy/app")["default"].create({"name":"ember-cli-google-fonts","version":"1.0.0."});
+/* jshint ignore:end */
+
+/* jshint ignore:start */
+
+if (!runningTests) {
+  require("dummy/app")["default"].create({"name":"ember-cli-google-fonts","version":"2.3.0"});
 }
 
 /* jshint ignore:end */
