@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-google-fonts",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "Google Fonts support for ember-cli.",
   "author": "Damien Caselli <damien.caselli@gmail.com>",
   "directories": {
