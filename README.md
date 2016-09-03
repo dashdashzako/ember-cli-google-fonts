@@ -24,7 +24,7 @@ module.exports = function(environment) {
     /* your config */
 
     googleFonts: [
-      'Open+Sans:300',
+      'Open+Sans:300,400,700',
       'Roboto:300'
     ],
 
