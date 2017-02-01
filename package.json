@@ -1,9 +1,11 @@
 {
   "name": "ember-cli-google-fonts",
-  "version": "0.0.0",
+  "version": "2.11.0",
   "description": "The default blueprint for ember-cli addons.",
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "google-fonts",
+    "fonts"
   ],
   "license": "MIT",
   "author": "",
@@ -45,11 +47,6 @@
     "ember-welcome-page": "^2.0.2",
     "loader.js": "^4.0.10"
   },
-  "keywords": [
-    "ember-addon",
-    "google-fonts",
-    "fonts"
-  ],
   "engines": {
     "node": ">= 0.12.0"
   },
