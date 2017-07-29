@@ -5,7 +5,7 @@ module.exports = function(environment) {
   let ENV = {
     modulePrefix: 'dummy',
     environment,
-    rootURL: '/',
+    rootURL: '/ember-cli-google-fonts/',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
