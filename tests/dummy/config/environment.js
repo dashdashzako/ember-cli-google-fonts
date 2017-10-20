@@ -44,7 +44,7 @@ module.exports = function(environment) {
 
   if (environment === 'test') {
     // Testem prefers this...
-    ENV.locationType = 'none';
+    // here you can enable a production-specific feature
 
     // keep test console output quieter
     ENV.APP.LOG_ACTIVE_GENERATION = false;
