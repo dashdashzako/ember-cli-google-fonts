@@ -4,7 +4,7 @@ Lazily add Google Fonts to your Ember application.
 
 This addon will add the fonts declaration to the `content-for: head` hook to avoid including these inside the css files.
 
-Addon dummy build is available here: http://damiencaselli.github.io/ember-cli-google-fonts/.
+Addon dummy build is available here: <http://dashdashzako.github.io/ember-cli-google-fonts/>.
 
 Versions follow [Ember 2.x project](http://emberjs.com/blog/2015/06/16/ember-project-at-2-0.html) versioning.
 
