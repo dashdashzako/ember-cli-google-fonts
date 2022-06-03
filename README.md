@@ -1,8 +1,12 @@
 # ember-cli-google-fonts
 
-⚠️ This repository isn't maintained any longer
-
 Lazily add Google Fonts to your Ember application.
+
+---
+
+**⚠️ this repository isn't maintained any longer ⚠️**
+
+---
 
 This addon will add the fonts declaration to the `content-for: head` hook to avoid including these inside the css files.
 
