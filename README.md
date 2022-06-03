@@ -1,4 +1,6 @@
-# Ember-cli-google-fonts
+# ember-cli-google-fonts
+
+⚠️ This repository isn't maintained any longer
 
 Lazily add Google Fonts to your Ember application.
 
